@@ -10,6 +10,15 @@ services:
       - 32780:80
     networks:
       - budgetsnap
+  web:
+    container_name: budgetsnap_web
+    build:
+      context: .
+      dockerfile: BudgetSnap.Web/Dockerfile
+    ports:
+      - 32781:80
+    networks:
+      - budgetsnap
 
 networks:
   budgetsnap:
