@@ -1,6 +1,6 @@
 using System;
 
-namespace BudgetSnap
+namespace BudgetSnap.Api
 {
     public class WeatherForecast
     {

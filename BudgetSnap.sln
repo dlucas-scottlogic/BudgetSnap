@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetSnap.Api", "BudgetSnap\BudgetSnap.Api.csproj", "{53492AB7-AA14-4959-A997-3F127A27AA2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetSnap.Web", "BudgetSnap.Web\BudgetSnap.Web.csproj", "{FA3B2F4C-28D5-4EC8-8446-5D160553BAAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53492AB7-AA14-4959-A997-3F127A27AA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53492AB7-AA14-4959-A997-3F127A27AA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53492AB7-AA14-4959-A997-3F127A27AA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53492AB7-AA14-4959-A997-3F127A27AA2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3B2F4C-28D5-4EC8-8446-5D160553BAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3B2F4C-28D5-4EC8-8446-5D160553BAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3B2F4C-28D5-4EC8-8446-5D160553BAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3B2F4C-28D5-4EC8-8446-5D160553BAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09B6AB4E-6D94-4ED4-9347-7393D237EB46}
+	EndGlobalSection
+EndGlobal
