@@ -19,6 +19,16 @@ services:
       - 32781:80
     networks:
       - budgetsnap
+      
+  identity:
+    container_name: budgetsnap_identityserver
+    build:
+      context: .
+      dockerfile: BudgetSnap.IdentityServer/Dockerfile
+    ports:
+      - 32782:80
+    networks:
+      - budgetsnap
 
 networks:
   budgetsnap:
