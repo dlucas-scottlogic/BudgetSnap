@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +22,8 @@ namespace BudgetSnap.IdentityServer
             services.AddIdentityServer()
                 .AddInMemoryCaching()
                 .AddClientStore<InMemoryClientStore>()
-                .AddResourceStore<InMemoryResourcesStore>();
+                .AddResourceStore<InMemoryResourcesStore>()
+                .AddTestUsers(TestUsers.Users);
 
             services.AddControllersWithViews();
         }
