@@ -4,16 +4,16 @@ import { AppThunkAction } from './';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
-export interface WeatherForecastsState {
+export interface TransactionState {
     isLoading: boolean;
-    startDateIndex?: number;
-    forecasts: WeatherForecast[];
+    startIndex?: number;
+    transactions: Transaction[];
 }
 
-export interface WeatherForecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
+export interface Transaction {
+    transactionId: string;
+    value: number;
+    transactionDate: number;
     summary: string;
 }
 
@@ -21,37 +21,37 @@ export interface WeatherForecast {
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-interface RequestWeatherForecastsAction {
-    type: 'REQUEST_WEATHER_FORECASTS';
-    startDateIndex: number;
+interface RequestTransactionsAction {
+    type: 'REQUEST_TRANSACTIONS';
+    startIndex: number;
 }
 
-interface ReceiveWeatherForecastsAction {
-    type: 'RECEIVE_WEATHER_FORECASTS';
-    startDateIndex: number;
-    forecasts: WeatherForecast[];
+interface ReceiveTransactionsAction {
+    type: 'RECEIVE_TRANSACTIONS';
+    startIndex: number;
+    transactions: Transaction[];
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction;
+type KnownAction = RequestTransactionsAction | ReceiveTransactionsAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestTransactions: (startIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         const appState = getState();
-        if (appState && appState.weatherForecasts && startDateIndex !== appState.weatherForecasts.startDateIndex) {
-            fetch(`weatherforecast`)
-                .then(response => response.json() as Promise<WeatherForecast[]>)
+        if (appState && appState.transactions && startIndex !== appState.transactions.startIndex) {
+            fetch("http://localhost:32780/Transaction")
+                .then(response => response.json() as Promise<Transaction[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
+                    dispatch({ type: 'RECEIVE_TRANSACTIONS', startIndex: startIndex, transactions: data });
                 });
 
-            dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
+            dispatch({ type: 'REQUEST_TRANSACTIONS', startIndex: startIndex });
         }
     }
 };
@@ -59,28 +59,28 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: WeatherForecastsState = { forecasts: [], isLoading: false };
+const unloadedState: TransactionState = { transactions: [], isLoading: false };
 
-export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsState | undefined, incomingAction: Action): WeatherForecastsState => {
+export const reducer: Reducer<TransactionState> = (state: TransactionState | undefined, incomingAction: Action): TransactionState => {
     if (state === undefined) {
         return unloadedState;
     }
 
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'REQUEST_WEATHER_FORECASTS':
+        case 'REQUEST_TRANSACTIONS':
             return {
-                startDateIndex: action.startDateIndex,
-                forecasts: state.forecasts,
+                startIndex: action.startIndex,
+                transactions: state.transactions,
                 isLoading: true
             };
-        case 'RECEIVE_WEATHER_FORECASTS':
+        case 'RECEIVE_TRANSACTIONS':
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
             // handle out-of-order responses.
-            if (action.startDateIndex === state.startDateIndex) {
+            if (action.startIndex === state.startIndex) {
                 return {
-                    startDateIndex: action.startDateIndex,
-                    forecasts: action.forecasts,
+                    startIndex: action.startIndex,
+                    transactions: action.transactions,
                     isLoading: false
                 };
             }
