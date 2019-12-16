@@ -29,6 +29,21 @@ services:
       - 32782:80
     networks:
       - budgetsnap
+      
+  sql:
+    container_name: budgetsnap_sql
+    build:
+      context: .
+      dockerfile: docker/sql/Dockerfile
+    ports:
+      - 14333:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=P@ssword
+      - MSSQL_SA_USER=sa
+      - MSSQL_COLLATION=Latin1_General_CS_AS
+    networks:
+      - budgetsnap
 
 networks:
   budgetsnap:
