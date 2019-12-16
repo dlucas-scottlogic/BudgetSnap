@@ -3,12 +3,12 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
-export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }> {
-    public state = {
+export default class NavMenu extends React.Component {
+    state = {
         isOpen: false
     };
 
-    public render() {
+    render() {
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
@@ -21,9 +21,6 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                                     <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                                </NavItem>
-                                <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/transactions">Transactions</NavLink>
                                 </NavItem>
                             </ul>
@@ -34,7 +31,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
         );
     }
 
-    private toggle = () => {
+    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
