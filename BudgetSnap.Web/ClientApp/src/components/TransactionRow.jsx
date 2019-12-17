@@ -3,9 +3,15 @@
 
 const TransactionRow = (props) => {
 
-    const [modifyState, setModifyState] = useState("normal");
+    // used to toggle between display or edit mode
+    const [controlState, setControlState] = useState("normal");
+
+    // used to toggle between display or edit mode
+    const [rowState, setRowState] = useState("saved");
+
     // store a copy of the confirmed data in case the user wants to cancel their changes.
     const [confirmedData, setConfirmedData] = useState(props.transaction);
+
     // store a copy of the data we can work with
     const [changeableData, setChangeableData] = useState(props.transaction);
 
@@ -13,7 +19,7 @@ const TransactionRow = (props) => {
 
     function handleModifyClick(e) {
         e.preventDefault();
-        setModifyState("modifying");
+        setControlState("modifying");
     }
 
     function handleCancelClick(e) {
@@ -21,7 +27,7 @@ const TransactionRow = (props) => {
         // reset back to last known good state
         setChangeableData(confirmedData);
         // close modify functionality
-        setModifyState("normal");
+        setControlState("normal");
     }
 
     function handleSaveClick(e) {
@@ -29,8 +35,9 @@ const TransactionRow = (props) => {
         // pass state back up somehow?
 
         // set last known good state to current data.
+        setRowState("dataChanged");
         setConfirmedData(changeableData);
-        setModifyState("normal");
+        setControlState("normal");
     }
 
     function handleValueChange(event) {
@@ -47,7 +54,7 @@ const TransactionRow = (props) => {
         });
     }
 
-    if (modifyState !== "modifying") {
+    if (controlState !== "modifying") {
         return (
             <tr key={changeableData.transactionId}>
                 <td>{changeableData.transactionId}</td>
