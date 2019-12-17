@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BudgetSnap.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,24 +12,41 @@ namespace BudgetSnap.Api.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ILogger<TransactionController> _logger;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionController(ILogger<TransactionController> logger)
+        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService)
         {
             _logger = logger;
+            _transactionService = transactionService;
         }
 
         [HttpGet]
-        public IEnumerable<Transaction> Get()
+        public IEnumerable<TransactionDto> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 10).Select(index => new Transaction
-            {
-                TransactionDate = DateTime.Now.AddDays(index*-1).ToUniversalTime(),
-                TransactionId = rng.Next(0, 999999),
-                Value = rng.Next(-20, 55),
-                Summary = "Test summary!"
-            })
-            .ToArray();
+            return _transactionService.GetTransactions();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public TransactionDto Get(long id)
+        {
+            return _transactionService.GetTransaction(id);
+        }
+
+        [HttpPost]
+        public ActionResult<TransactionDto> Post(TransactionDto transaction)
+        {
+            var transactionToReturn = _transactionService.SaveTransaction(transaction);
+
+            return CreatedAtAction("Get", transactionToReturn);
+        }
+
+        [HttpPut]
+        public ActionResult Put(TransactionDto transaction)
+        {
+            var transactionToReturn = _transactionService.SaveTransaction(transaction);
+
+            return Ok();
         }
     }
 }

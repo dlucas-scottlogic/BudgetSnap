@@ -1,3 +1,5 @@
+using BudgetSnap.Api.Repositories;
+using BudgetSnap.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +40,9 @@ namespace BudgetSnap.Api
                             "http://localhost:32781");
                     });
             });
+
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionService, TransactionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

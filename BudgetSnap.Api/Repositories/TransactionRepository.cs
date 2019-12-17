@@ -1,0 +1,62 @@
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
+using BudgetSnap.Api.Models;
+using System.Linq;
+using Dapper;
+
+namespace BudgetSnap.Api.Repositories
+{
+    public class TransactionRepository : ITransactionRepository
+    {
+        private string _connectionString = "Server=localhost,14333;Database=BudgetSnap;User Id=sa;Password=P@ssword;";
+
+
+        public TransactionDataObject GetTransaction(long id)
+        {
+            string sql = "SELECT TransactionId, [Value], TransactionDate, Summary FROM dbo.Transactions WHERE TransactionId = @Id";
+
+            TransactionDataObject transaction;
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                transaction = conn.Query<TransactionDataObject>(sql, new { Id = id }).SingleOrDefault();
+            }
+
+            return transaction;
+        }
+
+        public IEnumerable<TransactionDataObject> GetTransactions()
+        {
+            string sql = "SELECT TransactionId, [Value], TransactionDate, Summary FROM dbo.Transactions";
+
+            IEnumerable<TransactionDataObject> transactions;
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                transactions = conn.Query<TransactionDataObject>(sql);
+            }
+
+            return transactions;
+        }
+
+        public TransactionDataObject SaveTransaction(TransactionDataObject item)
+        {
+            string sql = "INSERT INTO dbo.Transaction ([Value], TransactionDate, Summary) Values (@Value, @TransactionDate, @Summary); " +
+                "SELECT CAST(SCOPE_IDENTITY() as BIGINT)";
+
+            long rowId;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                rowId = connection.Query<long>(sql,
+                    new
+                    {
+                        item.Value,
+                        item.TransactionDate,
+                        item.Summary
+                    }).Single();
+            }
+
+            return GetTransaction(rowId);
+        }
+    }
+}
