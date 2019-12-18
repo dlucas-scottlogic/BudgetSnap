@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using BudgetSnap.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,12 +9,10 @@ namespace BudgetSnap.Api.Controllers
     [Route("[controller]")]
     public class TransactionController : ControllerBase
     {
-        private readonly ILogger<TransactionController> _logger;
         private readonly ITransactionService _transactionService;
 
-        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService)
+        public TransactionController(ITransactionService transactionService)
         {
-            _logger = logger;
             _transactionService = transactionService;
         }
 

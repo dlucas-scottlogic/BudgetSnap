@@ -3,13 +3,18 @@ using System.Data.SqlClient;
 using BudgetSnap.Api.Models;
 using System.Linq;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace BudgetSnap.Api.Repositories
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private string _connectionString = "Server=localhost,14333;Database=BudgetSnap;User Id=sa;Password=P@ssword;";
+        private readonly string _connectionString;
 
+        public TransactionRepository(IConfiguration config)
+        {
+            _connectionString = config.GetConnectionString("TransactionDatabase");
+        }
 
         public TransactionDataObject GetTransaction(long id)
         {
