@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
-import Transactions from './components/Transaction';
+import Transactions from './components/TransactionList';
 
 import './custom.css'
 

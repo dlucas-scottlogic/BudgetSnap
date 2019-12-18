@@ -1,56 +1,80 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import * as TransactionsStore from '../store/Transaction';
-import TransactionRow from "./TransactionRow"
+﻿import React, { useState } from 'react';
 
-class Transaction extends React.Component {
-    // This method is called when the component is first added to the document
-    componentDidMount() {
-        this.ensureDataFetched();
+
+const TransactionRow = (props) => {
+
+    // used to toggle between display or edit mode
+    const [controlState, setControlState] = useState("normal");
+
+    // used to toggle between display or edit mode
+    const [rowState, setRowState] = useState("saved");
+
+    // store a copy of the confirmed data in case the user wants to cancel their changes.
+    const [confirmedData, setConfirmedData] = useState(props.transaction);
+
+    // store a copy of the data we can work with
+    const [changeableData, setChangeableData] = useState(props.transaction);
+
+    // grab initial data from the props, and store in local state.
+
+    function handleModifyClick(e) {
+        e.preventDefault();
+        setControlState("modifying");
     }
 
-    // This method is called when the route parameters change
-    componentDidUpdate() {
-        this.ensureDataFetched();
+    function handleCancelClick(e) {
+        e.preventDefault();
+        // reset back to last known good state
+        setChangeableData(confirmedData);
+        // close modify functionality
+        setControlState("normal");
     }
 
-    render() {
+    function handleSaveClick(e) {
+        e.preventDefault();
+        // pass state back up somehow?
+
+        // set last known good state to current data.
+        setRowState("dataChanged");
+        setConfirmedData(changeableData);
+        setControlState("normal");
+    }
+
+    function handleValueChange(event) {
+        setChangeableData({
+            ...changeableData,
+            value: event.target.value
+        });
+    }
+
+    function handleSummaryChange(event) {
+        setChangeableData({
+            ...changeableData,
+            summary: event.target.value
+        });
+    }
+
+    if (controlState !== "modifying") {
         return (
-            <React.Fragment>
-                <h1 id="tabelLabel">Transactions</h1>
-                {this.renderTransactionsTable()}
-            </React.Fragment>
+            <tr key={changeableData.transactionId}>
+                <td>{changeableData.transactionId}</td>
+                <td>&#163;{changeableData.value}</td>
+                <td>{changeableData.transactionDate}</td>
+                <td>{changeableData.summary}</td>
+                <td><a href="#" onClick={handleModifyClick}>Modify</a></td>
+            </tr>
+        );
+    } else {
+        return (
+            <tr key={changeableData.transactionId}>
+                <td>{changeableData.transactionId}</td>
+                <td><input type="text" name="value" value={changeableData.value} onChange={handleValueChange}/></td>
+                <td>{changeableData.transactionDate}</td>
+                <td><input type="text" name="summary" value={changeableData.summary} onChange={handleSummaryChange} /></td>
+                <td><a href="#" onClick={handleSaveClick}>Save</a> or <a href="#" onClick={handleCancelClick}>Cancel</a></td>
+            </tr>
         );
     }
+};
 
-    ensureDataFetched() {
-        const startIndex = parseInt(this.props.match.params.startIndex, 10) || 0;
-        this.props.requestTransactions(startIndex);
-    }
-
-    renderTransactionsTable() {
-        return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Transaction Id</th>
-                        <th>Value</th>
-                        <th>Transaction Date</th>
-                        <th>Summary</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.props.transactions.map((transaction) =>
-                        <TransactionRow key={transaction.transactionId} transaction={transaction} />
-                    )}
-                </tbody>
-            </table>
-        );
-    }    
-}
-
-export default connect(
-    (state) => state.transactions, // Selects which state properties are merged into the component's props
-    TransactionsStore.actionCreators // Selects which action creators are merged into the component's props
-)(Transaction);
+export default TransactionRow;
