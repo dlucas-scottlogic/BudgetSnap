@@ -46,7 +46,7 @@ namespace BudgetSnap.Api.Repositories
 
         public TransactionDataObject SaveTransaction(TransactionDataObject item)
         {
-            string sql = "INSERT INTO dbo.Transaction ([Value], TransactionDate, Summary) Values (@Value, @TransactionDate, @Summary); " +
+            string sql = "INSERT INTO dbo.Transactions ([Value], TransactionDate, Summary) Values (@Value, @TransactionDate, @Summary); " +
                 "SELECT CAST(SCOPE_IDENTITY() as BIGINT)";
 
             long rowId;

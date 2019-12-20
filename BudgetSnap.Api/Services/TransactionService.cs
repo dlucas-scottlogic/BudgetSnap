@@ -41,7 +41,6 @@ namespace BudgetSnap.Api.Services
         {
             return new TransactionDto
             {
-                RowState = RowState.Saved,
                 Summary = item.Summary,
                 TransactionDate = item.TransactionDate,
                 TransactionId = item.TransactionId,

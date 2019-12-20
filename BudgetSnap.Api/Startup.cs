@@ -37,7 +37,9 @@ namespace BudgetSnap.Api
                     builder =>
                     {
                         builder.WithOrigins("https://localhost:44347",
-                            "http://localhost:32781");
+                            "http://localhost:32781")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
                     });
             });
 

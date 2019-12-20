@@ -24,6 +24,13 @@ const reducer = (state, incomingAction) => {
                 };
             }
             break;
+        case 'ADD_TRANSACTION':
+            console.log('Add transaction reducer called.');
+            return {
+                ...state,
+                item: action.payload
+            }
+            break;
     }
 
     return state;
