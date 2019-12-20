@@ -1,4 +1,4 @@
-﻿const TransactionListActionCreators = {
+﻿export const TransactionListActionCreators = {
     requestTransactions: (startIndex) => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         const appState = getState();
@@ -11,7 +11,8 @@
 
             dispatch({ type: 'REQUEST_TRANSACTIONS', startIndex: startIndex });
         }
-    }
-};
+    },
+    UpdateTransaction: (transaction) => (dispatch, getState) => {
 
-export default TransactionListActionCreators;
+    }
+}

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import TransactionListActionCreators from '../redux/actions/TransactionList';
+import { TransactionListActionCreators } from '../redux/actions/TransactionList';
 import Transaction from "./Transaction"
+import TransactionForm from "./TransactionForm"
 
 class TransactionList extends React.Component {
     // This method is called when the component is first added to the document
@@ -30,24 +31,28 @@ class TransactionList extends React.Component {
 
     renderTransactionsTable() {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Transaction Id</th>
-                        <th>Value</th>
-                        <th>Transaction Date</th>
-                        <th>Summary</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.props.transactions.map((transaction) =>
-                        <Transaction key={transaction.transactionId} transaction={transaction} />
-                    )}
-                </tbody>
-            </table>
+            <div>
+                <TransactionForm />
+                <hr />
+                <table className='table table-striped' aria-labelledby="tabelLabel">
+                    <thead>
+                        <tr>
+                            <th>Transaction Id</th>
+                            <th>Value</th>
+                            <th>Transaction Date</th>
+                            <th>Summary</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.transactions.map((transaction) =>
+                            <Transaction key={transaction.transactionId} transaction={transaction} />
+                        )}
+                    </tbody>
+                </table>
+            </div>
         );
-    }    
+    }
 }
 
 export default connect(
