@@ -22,7 +22,7 @@ class TransactionForm extends React.Component {
 
         const post = {
             transactionId: 0,
-            value: this.state.value,
+            value: 100,
             transactionDate: "2019-12-20",
             summary: "string"
         }
