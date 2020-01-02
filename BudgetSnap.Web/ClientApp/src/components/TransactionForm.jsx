@@ -1,21 +1,31 @@
 ﻿import React from 'react';
 import { connect } from 'react-redux';
 import { AddTransaction } from '../redux/actions/AddTransaction';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class TransactionForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 0
+            value: 0,
+            startDate: new Date()
         };
 
-        this.onChange = this.onChange.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
     }
 
-    onChange(e) {
+    handleValueChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
+
+    handleDateChange(date) {
+        this.setState({
+            startDate: date
+        });
+    };
 
     onSubmit(e) {
         e.preventDefault();
@@ -40,7 +50,8 @@ class TransactionForm extends React.Component {
                 <form onSubmit={this.onSubmit} >
                     <div>
                         <label>value</label>
-                        <input name="value" value={this.state.value} onChange={this.onChange} type="text" />
+                        <input name="value" value={this.state.value} onChange={this.handleValueChange} type="text" />
+                        <DatePicker selected={this.state.startDate} onChange={this.handleDateChange} />
                         <button type="submit">Submit </ button>
                     </div>
                 </form>
