@@ -8,3 +8,7 @@ BudgetSnap is a simple tool for storing transaction data, eventually you will be
 ### Running the project
 - Navigate to the project directory
 - Run Docker-compose up
+
+### non standard react pacakege
+- react-datepicker
+- redux
