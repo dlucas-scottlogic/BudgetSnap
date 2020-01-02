@@ -25,15 +25,18 @@ const reducer = (state, incomingAction) => {
             }
             break;
         case 'ADD_TRANSACTION':
-            console.log('Add transaction reducer called.');
             return {
                 ...state,
                 transactions: [action.payload, ...state.transactions]
-            }
-            break;
+            };
+        case 'DELETE_TRANSACTION':
+            return {
+                ...state,
+                transactions: state.transactions.filter(item => item.transactionId !== action.payload)
+            };
+        default:
+            return state;
     }
-
-    return state;
 };
 
 export default reducer;

@@ -1,13 +1,12 @@
 ﻿import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { DeleteTransaction } from '../redux/actions/DeleteTransaction';
 
 
-const TransactionRow = (props) => {
+const Transaction = (props) => {
 
     // used to toggle between display or edit mode
     const [controlState, setControlState] = useState("normal");
-
-    // used to toggle between display or edit mode
-    const [rowState, setRowState] = useState("saved");
 
     // store a copy of the confirmed data in case the user wants to cancel their changes.
     const [confirmedData, setConfirmedData] = useState(props.transaction);
@@ -35,9 +34,13 @@ const TransactionRow = (props) => {
         // pass state back up somehow?
 
         // set last known good state to current data.
-        setRowState("dataChanged");
         setConfirmedData(changeableData);
         setControlState("normal");
+    }
+
+    function handleDeleteClick(e) {
+        e.preventDefault();
+        props.DeleteTransaction(changeableData.transactionId);
     }
 
     function handleValueChange(event) {
@@ -61,7 +64,8 @@ const TransactionRow = (props) => {
                 <td>&#163;{changeableData.value}</td>
                 <td>{changeableData.transactionDate}</td>
                 <td>{changeableData.summary}</td>
-                <td><a href="#" onClick={handleModifyClick}>Modify</a></td>
+                <td><button onClick={handleModifyClick}>Modify</button> | <button onClick={handleDeleteClick}>Delete</button></td>
+
             </tr>
         );
     } else {
@@ -71,10 +75,13 @@ const TransactionRow = (props) => {
                 <td><input type="text" name="value" value={changeableData.value} onChange={handleValueChange}/></td>
                 <td>{changeableData.transactionDate}</td>
                 <td><input type="text" name="summary" value={changeableData.summary} onChange={handleSummaryChange} /></td>
-                <td><a href="#" onClick={handleSaveClick}>Save</a> or <a href="#" onClick={handleCancelClick}>Cancel</a></td>
+                <td><button onClick={handleSaveClick}>Save</button> | <button onClick={handleCancelClick}>Cancel</button></td>
             </tr>
         );
     }
 };
 
-export default TransactionRow;
+export default connect(
+    (state) => state.transactions, // Selects which state properties are merged into the component's props
+    { DeleteTransaction } // Selects which action creators are merged into the component's props
+)(Transaction);

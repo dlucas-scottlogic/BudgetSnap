@@ -9,5 +9,6 @@ namespace BudgetSnap.Api.Repositories
         TransactionDataObject GetTransaction(long id);
         IEnumerable<TransactionDataObject> GetTransactions();        
         TransactionDataObject SaveTransaction(TransactionDataObject item);
+        long DeleteTransaction(long transactionId);
     }
 }

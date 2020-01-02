@@ -16,6 +16,17 @@ namespace BudgetSnap.Api.Repositories
             _connectionString = config.GetConnectionString("TransactionDatabase");
         }
 
+        public long DeleteTransaction(long transactionId)
+        {
+            var sql = "DELETE FROM dbo.Transactions WHERE TransactionId = @Id";
+            using (var conn = new SqlConnection(_connectionString))
+            {                
+                conn.Execute(sql, new { Id = transactionId });
+            }
+
+            return transactionId;
+        }
+
         public TransactionDataObject GetTransaction(long id)
         {
             string sql = "SELECT TransactionId, [Value], TransactionDate, Summary FROM dbo.Transactions WHERE TransactionId = @Id";

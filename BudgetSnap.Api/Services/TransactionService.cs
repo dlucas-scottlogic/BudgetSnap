@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BudgetSnap.Api.Models;
 using BudgetSnap.Api.Repositories;
@@ -35,6 +36,11 @@ namespace BudgetSnap.Api.Services
             var objectToSave = MapFromDtoToDataObject(transactionDto);
 
             return MapFromDataObjectToDto(_transactionRepository.SaveTransaction(objectToSave));
+        }
+
+        public long DeleteTransaction (long transactionId)
+        {
+            return _transactionRepository.DeleteTransaction(transactionId);
         }
 
         private TransactionDto MapFromDataObjectToDto(TransactionDataObject item)

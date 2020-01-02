@@ -7,5 +7,6 @@ namespace BudgetSnap.Api.Services
         TransactionDto GetTransaction(long id);
         IEnumerable<TransactionDto> GetTransactions();
         TransactionDto SaveTransaction(TransactionDto transactionDto);
+        public long DeleteTransaction(long transactionId);
     }
 }

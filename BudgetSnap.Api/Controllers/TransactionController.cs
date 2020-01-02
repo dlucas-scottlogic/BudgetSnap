@@ -44,5 +44,18 @@ namespace BudgetSnap.Api.Controllers
 
             return Ok();
         }
+
+        [Route("{id:long}")]
+        [HttpDelete]
+        public ActionResult Delete(long id)
+        {
+            var deletedId = _transactionService.DeleteTransaction(id);
+            if (deletedId > 0)
+            {
+                return Ok(deletedId);
+            }
+
+            return BadRequest();
+        }
     }
 }

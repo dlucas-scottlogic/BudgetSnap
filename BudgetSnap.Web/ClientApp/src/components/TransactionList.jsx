@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { TransactionListActionCreators } from '../redux/actions/TransactionList';
+import { RequestTransactions } from '../redux/actions/RequestTransactions';
 import Transaction from "./Transaction"
 import TransactionForm from "./TransactionForm"
 
@@ -26,7 +26,7 @@ class TransactionList extends React.Component {
 
     ensureDataFetched() {
         const startIndex = parseInt(this.props.match.params.startIndex, 10) || 0;
-        this.props.requestTransactions(startIndex);
+        this.props.RequestTransactions(startIndex);
     }
 
     renderTransactionsTable() {
@@ -57,5 +57,5 @@ class TransactionList extends React.Component {
 
 export default connect(
     (state) => state.transactions, // Selects which state properties are merged into the component's props
-    TransactionListActionCreators // Selects which action creators are merged into the component's props
+    { RequestTransactions } // Selects which action creators are merged into the component's props
 )(TransactionList);
