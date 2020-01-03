@@ -9,7 +9,8 @@ class TransactionForm extends React.Component {
         super(props);
         this.state = {
             value: 0,
-            startDate: new Date()
+            startDate: new Date(),
+            summary: ""
         };
 
         this.handleValueChange = this.handleValueChange.bind(this);
@@ -20,7 +21,7 @@ class TransactionForm extends React.Component {
     handleValueChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
+    
     handleDateChange(date) {
         this.setState({
             startDate: date
@@ -30,16 +31,16 @@ class TransactionForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
+        let dateString = this.state.startDate.toISOString();
+
         const post = {
             transactionId: 0,
-            value: 100,
-            transactionDate: "2019-12-20",
-            summary: "string"
+            value: parseFloat(this.state.value),
+            transactionDate: dateString,
+            summary: this.state.summary
         }
 
-        // call action to save here
-
-        console.log('Call action to save')
+        // call action to save
         this.props.AddTransaction(post);
     }
 
@@ -49,9 +50,15 @@ class TransactionForm extends React.Component {
                 <h3>New Transaction</h3>
                 <form onSubmit={this.onSubmit} >
                     <div>
-                        <label>value</label>
+                        <label>Value (&#163;): </label>
                         <input name="value" value={this.state.value} onChange={this.handleValueChange} type="text" />
+                        
+                        <label>Transaction Date: </label>
                         <DatePicker selected={this.state.startDate} onChange={this.handleDateChange} />
+
+                        <label>Summary: </label>
+                        <input name="summary" value={this.state.summary} onChange={this.handleValueChange} type="text" />
+
                         <button type="submit">Submit </ button>
                     </div>
                 </form>
