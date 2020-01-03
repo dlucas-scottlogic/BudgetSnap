@@ -1,6 +1,8 @@
-﻿export function AddTransaction(transactionData) {
+﻿import { API_ROOT } from '../../api-config';
+
+export function AddTransaction(transactionData) {
     return function (dispatch) {
-        fetch("http://localhost:32780/Transaction", {
+        fetch(`${API_ROOT}/Transaction`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

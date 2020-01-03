@@ -36,7 +36,7 @@ namespace BudgetSnap.Api
                 options.AddPolicy(MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:44347",
+                        builder.WithOrigins("http://localhost:2908",
                             "http://localhost:32781")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
@@ -66,7 +66,6 @@ namespace BudgetSnap.Api
             });
 
             app.UseCors(MyAllowSpecificOrigins);
-            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

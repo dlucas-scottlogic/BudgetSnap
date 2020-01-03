@@ -1,6 +1,8 @@
-﻿export function DeleteTransaction(transactionDataId) {
+﻿import { API_ROOT } from '../../api-config';
+
+export function DeleteTransaction(transactionDataId) {
     return function (dispatch) {
-        fetch("http://localhost:32780/Transaction/" + transactionDataId, {
+        fetch(`${API_ROOT}/Transaction/` + transactionDataId, {
             method: 'DELETE',
         })
             .then(response => response.json())
