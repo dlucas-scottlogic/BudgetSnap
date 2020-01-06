@@ -55,7 +55,7 @@ namespace BudgetSnap.Api.Repositories
             return transactions;
         }
 
-        public TransactionDataObject SaveTransaction(TransactionDataObject item)
+        public TransactionDataObject CreateTransaction(TransactionDataObject item)
         {
             string sql = "INSERT INTO dbo.Transactions ([Value], TransactionDate, Summary) Values (@Value, @TransactionDate, @Summary); " +
                 "SELECT CAST(SCOPE_IDENTITY() as BIGINT)";
@@ -73,6 +73,29 @@ namespace BudgetSnap.Api.Repositories
             }
 
             return GetTransaction(rowId);
+        }
+
+        public TransactionDataObject UpdateTransaction(TransactionDataObject item)
+        {
+            string sql = 
+                "UPDATE dbo.Transactions " +
+                "SET [Value] = @Value, TransactionDate = @TransactionDate,  Summary = @Summary " +
+                "WHERE TransactionId = @TransactionId";
+
+            int rowsAffected = 0;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                rowsAffected = connection.Execute(sql,
+                    new
+                    {
+                        item.TransactionId,
+                        item.Value,
+                        item.TransactionDate,
+                        item.Summary
+                    });
+            }
+
+            return GetTransaction(item.TransactionId);
         }
     }
 }

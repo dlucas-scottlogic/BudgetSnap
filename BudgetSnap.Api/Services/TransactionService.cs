@@ -31,16 +31,23 @@ namespace BudgetSnap.Api.Services
             return toReturn;
         }
 
-        public TransactionDto SaveTransaction(TransactionDto transactionDto)
+        public TransactionDto CreateTransaction(TransactionDto transactionDto)
         {
             var objectToSave = MapFromDtoToDataObject(transactionDto);
 
-            return MapFromDataObjectToDto(_transactionRepository.SaveTransaction(objectToSave));
+            return MapFromDataObjectToDto(_transactionRepository.CreateTransaction(objectToSave));
         }
 
-        public long DeleteTransaction (long transactionId)
+        public long DeleteTransaction(long transactionId)
         {
             return _transactionRepository.DeleteTransaction(transactionId);
+        }
+
+        public TransactionDto UpdateTransaction(TransactionDto transactionDto)
+        {
+            var objectToSave = MapFromDtoToDataObject(transactionDto);
+
+            return MapFromDataObjectToDto(_transactionRepository.UpdateTransaction(objectToSave));
         }
 
         private TransactionDto MapFromDataObjectToDto(TransactionDataObject item)

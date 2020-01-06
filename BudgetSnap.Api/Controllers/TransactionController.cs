@@ -32,7 +32,7 @@ namespace BudgetSnap.Api.Controllers
         [HttpPost]
         public ActionResult<TransactionDto> Post(TransactionDto transaction)
         {
-            var transactionToReturn = _transactionService.SaveTransaction(transaction);
+            var transactionToReturn = _transactionService.CreateTransaction(transaction);
 
             return CreatedAtAction("Get", transactionToReturn);
         }
@@ -40,9 +40,9 @@ namespace BudgetSnap.Api.Controllers
         [HttpPut]
         public ActionResult Put(TransactionDto transaction)
         {
-            var transactionToReturn = _transactionService.SaveTransaction(transaction);
+            var transactionToReturn = _transactionService.UpdateTransaction(transaction);
 
-            return Ok();
+            return Ok(transactionToReturn);
         }
 
         [Route("{id:long}")]

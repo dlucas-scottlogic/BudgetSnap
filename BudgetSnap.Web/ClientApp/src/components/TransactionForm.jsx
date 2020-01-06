@@ -68,7 +68,7 @@ render() {
                     <NumericInput name="value" value={this.state.value} onChange={this.handleValueChange} precision={2} step={1.0} snap />
 
                     <label>Transaction Date : </label>
-                    <DatePicker selected={this.state.startDate} onChange={this.handleDateChange} />
+                    <DatePicker dateFormat="dd/MM/yyyy" selected={this.state.startDate} onChange={this.handleDateChange} />
 
                     <label>Summary : </label>
                     <input name="summary" value={this.state.summary} onChange={this.handleTextChange} type="text" />

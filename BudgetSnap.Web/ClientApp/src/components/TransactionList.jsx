@@ -37,9 +37,8 @@ class TransactionList extends React.Component {
                 <table className='table table-striped' aria-labelledby="tabelLabel">
                     <thead>
                         <tr>
-                            <th>Transaction Id</th>
-                            <th>Value</th>
                             <th>Transaction Date</th>
+                            <th>Value</th>                            
                             <th>Summary</th>
                             <th></th>
                         </tr>
