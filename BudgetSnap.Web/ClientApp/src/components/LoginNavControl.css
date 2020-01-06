@@ -1,0 +1,10 @@
+﻿.drop-down-float {
+    position: absolute;
+    right: 10px;
+    background: #ffffff;
+    padding: 10px;
+    z-index: 10;
+    border: 2px solid #aaaaaa;
+    color: #aaaaaa;
+    text-align: center;
+}
