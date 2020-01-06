@@ -16,16 +16,16 @@ const LoginNavControl = () => {
         setExpandedState(!expandedState);
     }
 
-
-    if (expandedState === false) {
+    const loginbutton = () => {
         return (
-            <div onClick={toggleExpand}> Login </div>
+            <div onClick={toggleExpand}> Login <img src={defaultPerson} alt="unknown user image" width="30" height="30" /></div>
         );
-    }
-    else {
+    }    
+
+    if (expandedState === true) {
         return (
             <div>
-                <div onClick={toggleExpand}> Login </div>
+                {loginbutton()}
                 <div className="drop-down-float">
                     <form>
                         <div>
@@ -38,6 +38,9 @@ const LoginNavControl = () => {
                 </div>
             </div>
         );
+    }
+    else {
+        return loginbutton()
     }
 
 }
