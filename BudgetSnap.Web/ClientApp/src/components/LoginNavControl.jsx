@@ -2,6 +2,8 @@
 import { connect } from 'react-redux';
 import './LoginNavControl.css';
 import defaultPerson from '../images/user-icon.png';
+import { makeAuthenticator, makeUserManager, Callback } from 'react-oidc'
+import { LOGIN_URL } from '../login-config';
 
 const LoginNavControl = () => {
 
@@ -16,11 +18,44 @@ const LoginNavControl = () => {
         setExpandedState(!expandedState);
     }
 
+    var settings = {
+        authority: "http://localhost:32782",
+        client_id: "budgetsnap-frontend",
+        response_type: "code",
+        scope: "openid profile",
+
+        redirect_uri: "http://localhost:2908/login-landing",     
+    };
+
     const loginbutton = () => {
-        return (
-            <div onClick={toggleExpand}> Login <img src={defaultPerson} alt="unknown user image" width="30" height="30" /></div>
-        );
-    }    
+
+        var mgr = makeUserManager(settings);
+
+        mgr.getUser()
+            .then(function (user) {
+            if (user) {
+                //console.log(user);
+                return (<div>logged in</div>);
+            }
+            else {
+                //console.log("user not logged in");
+                return (<div onClick={mgr.signinRedirect()}>Login</div>);
+            }
+        });
+
+        //if (!loggedInState) {
+        //    let returnUrl = encodeURIComponent(window.location.href);
+        //    let fullLoginUrl = LOGIN_URL + "?ReturnUrl=" + returnUrl;
+
+        //    return (<a href={fullLoginUrl}>Login</a>);
+        //}
+        //else {
+        //    return (
+        //        <div onClick={toggleExpand}> Login <img src={defaultPerson} alt="unknown user image" width="30" height="30" /></div>
+        //    );
+        //}
+
+    }
 
     if (expandedState === true) {
         return (
