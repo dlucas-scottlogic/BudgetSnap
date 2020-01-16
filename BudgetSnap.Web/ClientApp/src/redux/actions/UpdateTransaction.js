@@ -1,7 +1,7 @@
 ﻿import { API_ROOT } from '../../api-config';
 
 export function UpdateTransaction(transactionData) {
-    console.log('Update Transaction Action called');
+    //console.log('Update Transaction Action called');
     return function (dispatch) {
         fetch(`${API_ROOT}/Transaction`, {
             method: 'PUT',

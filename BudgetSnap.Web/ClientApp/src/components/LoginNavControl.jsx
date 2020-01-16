@@ -2,51 +2,52 @@
 import { connect } from 'react-redux';
 import './LoginNavControl.css';
 import AuthService from './../auth-service'
+import { Login } from '../redux/actions/Login';
 
-const LoginNavControl = () => {
+const LoginNavControl = (props) => {
 
     const [loggedIn, setloggedIn] = useState(false);
 
     useEffect(
         () => {
             AuthService.getUser().then(user => {
-                if (user) {
-                    console.log("profile: " + user.profile.given_name);
-                    console.log("id_token: " + user.id_token);
-
+                if (user) {                   
                     setloggedIn(true);
+                    props.Login(true);
                 }
                 else {
-                    console.log("user not logged in");
                     setloggedIn(false);
+                    props.Login(false);
                 }
             });           
-        }, []);
+        });
 
     const logoutClick = (e) => {
         AuthService.logout(() => {
-            console.log("Logged out");
+            
         });
     }
 
     const loginClick = (e) => {
         AuthService.login(() => {
-            console.log("logged in");
+            
         });
+        
     }
 
     const loginbutton = () => {
         switch (loggedIn) {
             case true:
                 return (<div onClick={logoutClick}>Log Out</div>);
-                break;
-            case false:
+            default:
                 return (<div onClick={loginClick}>Login</div>);
-                break;
         }
     }
 
     return loginbutton()
 }
 
-export default connect()(LoginNavControl);
+export default connect(
+    (state) => state.auth,
+    { Login }
+    )(LoginNavControl);

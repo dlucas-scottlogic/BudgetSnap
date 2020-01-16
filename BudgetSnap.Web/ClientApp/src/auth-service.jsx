@@ -10,7 +10,6 @@ class AuthService {
 
     login(callback) {
         this.userManager.signinRedirect();
-        callback();
     }
 
     logout(callback) {
