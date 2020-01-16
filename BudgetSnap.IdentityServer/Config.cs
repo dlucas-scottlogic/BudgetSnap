@@ -15,7 +15,7 @@ namespace BudgetSnap.IdentityServer
                     ClientId = "budgetsnap-frontend",
                     ClientName = "budgetsnap",
                     AllowedGrantTypes = GrantTypes.Code, // just through the browser
-                    RedirectUris = { "http://localhost:2908/login-landing" },
+                    RedirectUris = { "http://localhost:2908/logincallback" },
                     AllowedScopes = {"openid", "email", "city_of_birth", "profile" },
                     RequireConsent = false,
                     RequireClientSecret = false

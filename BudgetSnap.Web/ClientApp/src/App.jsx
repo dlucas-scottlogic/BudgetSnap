@@ -3,6 +3,7 @@ import { Route } from 'react-router';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Transactions from './components/TransactionList';
+import LoginCallback from './components/LoginCallback';
 
 import './custom.css'
 
@@ -10,5 +11,6 @@ export default () => (
     <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/transactions' component={Transactions} />
+        <Route path='/logincallback' component={LoginCallback} />
     </Layout>
 );

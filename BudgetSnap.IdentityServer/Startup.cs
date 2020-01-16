@@ -30,13 +30,6 @@ namespace BudgetSnap.IdentityServer
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddDeveloperSigningCredential(); // change to AddSigningCredntial for prod
 
-            //services.AddAuthentication("MyCookie")
-            //.AddCookie("MyCookie", options =>
-            //{
-            //    options.SlidingExpiration = true;
-            //    options.ExpireTimeSpan = new TimeSpan(30, 0, 0); // 30 days
-            //});
-
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
