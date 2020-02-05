@@ -1,7 +1,7 @@
 ﻿const unloadedState = { isLoggedIn: false };
 
 const reducer = (state, incomingAction) => {
-    console.log('auth reducer called: ' + incomingAction.type + ' : ' + incomingAction.payload);
+    //console.log('auth reducer called: ' + incomingAction.type + ' : ' + incomingAction.payload);
 
     if (state === undefined) {
         return unloadedState;
@@ -12,7 +12,7 @@ const reducer = (state, incomingAction) => {
         case 'LOGIN':
             return {
                 ...state,
-                isLoggedIn: action.payload
+                user: action.payload
             };       
         default:
             return state;

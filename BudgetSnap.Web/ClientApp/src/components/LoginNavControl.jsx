@@ -2,25 +2,8 @@
 import { connect } from 'react-redux';
 import './LoginNavControl.css';
 import AuthService from './../auth-service'
-import { Login } from '../redux/actions/Login';
 
 const LoginNavControl = (props) => {
-
-    const [loggedIn, setloggedIn] = useState(false);
-
-    useEffect(
-        () => {
-            AuthService.getUser().then(user => {
-                if (user) {                   
-                    setloggedIn(true);
-                    props.Login(true);
-                }
-                else {
-                    setloggedIn(false);
-                    props.Login(false);
-                }
-            });           
-        });
 
     const logoutClick = (e) => {
         AuthService.logout(() => {
@@ -36,18 +19,20 @@ const LoginNavControl = (props) => {
     }
 
     const loginbutton = () => {
-        switch (loggedIn) {
+        switch (props.user != null) {
             case true:
-                return (<div onClick={logoutClick}>Log Out</div>);
+                return (<div style={{ display: "block", padding: "0.5rem 1rem"}} className="text-dark" onClick={logoutClick}>Welcome {props.user.profile.given_name} - Log Out</div>);
             default:
-                return (<div onClick={loginClick}>Login</div>);
+                return (<div style={{ display: "block", padding: "0.5rem 1rem"}} className="text-dark" onClick={loginClick}>Login</div>);
         }
     }
 
     return loginbutton()
 }
 
-export default connect(
-    (state) => state.auth,
-    { Login }
-    )(LoginNavControl);
+// map the redux state to the props of this component to access the data.
+function mapStateToProps(state) {
+    return { user: state.auth.user }
+}
+
+export default connect(mapStateToProps)(LoginNavControl);

@@ -5,8 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "connected-react-router": "6.2.1",
-    "history": "4.7.2",
-    "jquery": "^3.4.1",
+    "history": "4.7.2",    
     "merge": "1.2.1",
     "oidc-client": "^1.10.1",
     "popper.js": "^1.14.7",

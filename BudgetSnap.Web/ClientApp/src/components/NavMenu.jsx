@@ -1,41 +1,51 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import LoginNameControl from "./LoginNavControl"
+import LoginNavControl from "./LoginNavControl"
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
-export default class NavMenu extends React.Component {
-    state = {
-        isOpen: false
-    };
+const NavMenu = (props) => {
+    const [isOpen, setIsOpen] = useState(false);    
 
-    render() {
+    const toggle = () => {
+        setIsOpen(!isOpen);
+    }
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
                     <Container>
                         <NavbarBrand tag={Link} to="/">BudgetSnap.Web</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} className="mr-2" />
-                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
+                        <NavbarToggler onClick={toggle} className="mr-2" />
+                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={isOpen} navbar>
                             <ul className="navbar-nav flex-grow">
                                 <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                                 </NavItem>
+                                {props.user != null && 
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/transactions">Transactions</NavLink>
+                                    </NavItem>
+                                }
+                                {props.user != null && 
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/userinfo">User Info</NavLink>
+                                    </NavItem>
+                                }                                
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/transactions">Transactions</NavLink>
+                                    <LoginNavControl />
                                 </NavItem>
-                                <LoginNameControl />
                             </ul>
                         </Collapse>
                     </Container>
                 </Navbar>
             </header>
-        );
+        );  
     }
 
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
+// map the redux state to the props of this component to access the data.
+function mapStateToProps(state) {    
+    return { user: state.auth.user }
 }
+
+export default connect(mapStateToProps)(NavMenu);
